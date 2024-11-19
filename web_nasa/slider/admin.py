@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import Slider
+from easy_thumbnails.files import get_thumbnailer
 
 
 @admin.register(Slider)
@@ -13,6 +14,12 @@ class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
         """Функция для отображения миниатюр в админке."""
 
         if obj.image:
-            return format_html('<img src="{}" width="100" height="100" />', obj.image.url)
+            thumbnailer = get_thumbnailer(obj.image)
+            thumbnail = thumbnailer.get_thumbnail({
+                'size': (100, 100),
+                'crop': True,
+                'upscale': True,
+            })
+            return format_html('<img src="{}" />', thumbnail.url)
         return 'No Image'
-    image_thumbnail.short_description = 'Image'
+    image_thumbnail.short_description = 'Изображение'
