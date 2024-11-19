@@ -21,7 +21,7 @@
 3. Установите зависимости:
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r req.pip
     ```
    
 4. Перейдите в папку с проектом django:
